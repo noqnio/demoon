@@ -10,8 +10,8 @@ import numpy
 
 G = 6.67408*10**-11
 
-step = 0.1
-endtime = 3000
+step = 50
+endtime = 2371100
 
 # UNITS KM, KG
 
@@ -29,7 +29,7 @@ def DistBetween(obj1, obj2):
     return math.sqrt((obj1.pos[0]-obj2.pos[0])**2+(obj1.pos[1]-obj2.pos[1])**2)
 
 Earth = Body([0,0], 5.97237*10**24, [0,0], 6371)
-Moon = Body([0,405.4*10**3], 7.341*10**22, [5,0], 1737)
+Moon = Body([0,405.4*10**3], 7.341*10**22, [0.964,0], 1737)
 
 Moonposplot = [Moon.pos]
 
@@ -38,14 +38,14 @@ Moonposplot = [Moon.pos]
 
 #print MoonToEarth, FgravMag, FgravVct, A 
 
-for t in numpy.linspace(0,endtime,num=(endtime+2*step)/step):
+for t in numpy.linspace(0,endtime,endtime/step):
     #print Earth.pos, Moon.pos
     MoonToEarth = numpy.divide([Earth.pos[0]-Moon.pos[0], Earth.pos[1]-Moon.pos[1]], DistBetween(Earth, Moon))
     FgravMag = G*Earth.mass*Moon.mass/(DistBetween(Earth, Moon)*10**3)**2
     FgravVct = numpy.multiply(MoonToEarth, FgravMag)
-    A = numpy.divide(FgravVct,Moon.mass)
-    Moon.V = [Moon.V[0] + A[0], Moon.V[1] + A[1]]
-    Moon.pos = [Moon.pos[0] + Moon.V[0]/step, Moon.pos[1] + Moon.V[1]/step]
+    A = (numpy.divide(FgravVct,Moon.mass)/1000)
+    Moon.V = [Moon.V[0] + A[0]*step, Moon.V[1] + A[1]*step]
+    Moon.pos = [Moon.pos[0] + Moon.V[0]*step, Moon.pos[1] + Moon.V[1]*step]
     #print MoonToEarth, FgravVct, Moon.pos, A
     Moonposplot.append(Moon.pos)
 
