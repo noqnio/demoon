@@ -7,7 +7,7 @@ import numpy
 
 
 G = 6.67408*10**-11
-step = 2000
+step = 200
 endtime = 23681400
 
 # UNITS KM, KG, N, S
@@ -44,8 +44,8 @@ def FgravMag(body1, body2):
 def FgravVct(body1, body2):
     return numpy.multiply(PosUnitDirVct(body1, body2), FgravMag(body1, body2))
 
-Earth = Body([0,0], 5.97237*10**24, [-0.01185,0], [0,0], 6371)
-Moon = Body([0,405400], 7.341*10**22, [0.963553002013,0], [0,0], 1737)
+Earth = Body([0,0], 5*10**24, [1.6,0], [0,0], 5000)
+Moon = Body([0,100000], 5*10**24, [-1.604,0], [0,0], 5000)
 
 Moonposplot = [Moon.Pos]
 Earthposplot = [Earth.Pos]
@@ -62,7 +62,7 @@ Ecircle = plt.Circle((Earth.Pos[0], Earth.Pos[1]), Earth.R, color='g')
 Mcircle = plt.Circle((Moon.Pos[0], Moon.Pos[1]), Moon.R, color='grey')
 
 fig = plt.figure()
-ax = plt.axes(xlim=(-415.4*10**3, 415.4*10**3),ylim=(-415.4*10**3, 415.4*10**3))
+ax = plt.axes(xlim=(-200*10**3, 200*10**3),ylim=(-150*10**3, 250*10**3))
 Mline, = ax.plot(map(list, zip(*Moonposplot))[0],map(list, zip(*Moonposplot))[1], lw=0.5)
 Eline, = ax.plot(map(list, zip(*Earthposplot))[0],map(list, zip(*Earthposplot))[1], lw=0.5)
 
